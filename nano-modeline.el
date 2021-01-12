@@ -312,6 +312,15 @@
   (nano-modeline-compose (nano-modeline-status)
                          "Message" "(draft)" ""))
 
+;; ---------------------------------------------------------------------
+(defun nano-modeline-neotree-mode-p ()
+  (derived-mode-p 'neotree-mode))
+
+(defun nano-modeline-neotree-mode ()
+  (nano-modeline-compose ""
+                         ""
+			 (shorten-directory default-directory 10)
+			 ""))
 
 ;; ---------------------------------------------------------------------
 (setq org-mode-line-string nil)
@@ -464,6 +473,7 @@
   '((:eval
      (cond ((nano-modeline-prog-mode-p)            (nano-modeline-default-mode))
            ((nano-modeline-message-mode-p)         (nano-modeline-message-mode))
+           ((nano-modeline-neotree-mode-p)         (nano-modeline-neotree-mode))
            ((nano-modeline-elfeed-search-mode-p)   (nano-modeline-elfeed-search-mode))
            ((nano-modeline-elfeed-show-mode-p)     (nano-modeline-elfeed-show-mode))
            ((nano-modeline-deft-mode-p)            (nano-modeline-deft-mode))
