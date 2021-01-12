@@ -404,6 +404,25 @@
 (defun nano-modeline-text-mode-p ()
   (derived-mode-p 'text-mode))
 
+(defun nano-modeline-flycheck-count-all ()
+  (let ((info 0) (warning 0) (error 0))
+    (mapc
+     (lambda (item)
+       (let ((count (cdr item)))
+	 (pcase (flycheck-error-level-compilation-level (car item))
+	   (0 (cl-incf info count))
+	   (1 (cl-incf warning count))
+	   (2 (cl-incf error count)))))
+     (flycheck-count-errors flycheck-current-errors))
+    `((info . ,info) (warning . ,warning) (error . ,error))))
+
+(defun nano-modeline-flycheck-print-counts ()
+  (let-alist (nano-modeline-flycheck-count-all)
+    (format "ERR %s | WARN %s | INFO %s"
+	    (number-to-string .error)
+	    (number-to-string .warning)
+	    (number-to-string .info))))
+
 (defun nano-modeline-default-mode ()
     (let ((buffer-name (format-mode-line "%b"))
           (mode-name   (format-mode-line "%m"))
@@ -415,7 +434,7 @@
                                      (if branch (concat ", "
                                             (propertize branch 'face 'italic)))
                                      ")" )
-                             position)))
+                             (concat (nano-modeline-flycheck-print-counts) " | " position ))))
 
 ;; ---------------------------------------------------------------------
 (defun nano-modeline-status ()
