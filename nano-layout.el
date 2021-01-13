@@ -73,4 +73,10 @@
 ;; Hide org markup for README
 (setq org-hide-emphasis-markers t)
 
+;; Patch Neotree to remove project header & updir
+(defun nano--neo-insert-root-entry (node)
+  (neo-buffer--node-list-set nil node)
+  (beginning-of-line))
+(advice-add #'neo-buffer--insert-root-entry :override #'nano--neo-insert-root-entry)
+
 (provide 'nano-layout)
