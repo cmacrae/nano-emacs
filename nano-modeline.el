@@ -317,9 +317,17 @@
   (derived-mode-p 'neotree-mode))
 
 (defun nano-modeline-neotree-mode ()
-  (nano-modeline-compose ""
-                         ""
-			 (shorten-directory default-directory 10)
+  (nano-modeline-compose (if (fboundp 'all-the-icons-faicon)
+			     (concat " " (all-the-icons-faicon
+			      "book"
+			      :height 5
+			      :face 'nano-face-header-faded
+			      :v-adjust -0.1) " ")
+			   "")
+			 (if (fboundp 'projectile-default-project-name)
+			     (projectile-project-name)
+			   (shorten-directory default-directory ((window-width) -5)))
+			 ""
 			 ""))
 
 ;; ---------------------------------------------------------------------
