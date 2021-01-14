@@ -704,6 +704,12 @@ function is a convenience wrapper used by `describe-package-1'."
     (set-face 'company-tooltip-annotation                                    'nano-face-default)
     (set-face 'company-tooltip-annotation-selection        '(nano-face-strong nano-face-subtle))))
 
+(defun nano-theme--neotree ()
+  "Derive Neotree faces from nano faces."
+  (with-eval-after-load 'neotree
+    (set-face 'neo-dir-link-face    'nano-face-salient)
+    (set-face 'neo-file-link-face     'nano-face-faded)))
+
 (defun nano-theme ()
   "Derive many, many faces from the core nano faces."
   (nano-theme--basics)
@@ -732,6 +738,7 @@ function is a convenience wrapper used by `describe-package-1'."
   (nano-theme--markdown)
   (nano-theme--ivy)
   (nano-theme--helm)
+  (nano-theme--neotree)
   (nano-theme--hl-line)
   (nano-theme--company))
 
