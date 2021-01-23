@@ -710,6 +710,19 @@ function is a convenience wrapper used by `describe-package-1'."
     (set-face 'neo-dir-link-face    'nano-face-salient)
     (set-face 'neo-file-link-face     'nano-face-faded)))
 
+(defun nano-theme--avy ()
+  "Derive avy faces from nano faces."
+  (with-eval-after-load 'avy
+    (set-face-attribute 'avy-lead-face nil
+			:background nano-color-faded)
+    (set-face-attribute 'avy-lead-face-0 nil
+			:background nano-color-subtle
+			:foreground (face-foreground 'default))
+    (set-face-attribute 'avy-lead-face-1 nil
+			:background nano-color-popout
+			:foreground (face-foreground 'default))
+    (set-face-attribute 'avy-lead-face-2 nil
+
 (defun nano-theme ()
   "Derive many, many faces from the core nano faces."
   (nano-theme--basics)
@@ -740,6 +753,7 @@ function is a convenience wrapper used by `describe-package-1'."
   (nano-theme--helm)
   (nano-theme--neotree)
   (nano-theme--hl-line)
-  (nano-theme--company))
+  (nano-theme--company)
+  (nano-theme--avy))
 
 (provide 'nano-theme)
