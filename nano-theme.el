@@ -695,6 +695,20 @@ function is a convenience wrapper used by `describe-package-1'."
     (set-face 'company-tooltip-annotation                                    'nano-face-default)
     (set-face 'company-tooltip-annotation-selection        '(nano-face-strong nano-face-subtle))))
 
+(defun nano-theme--avy ()
+  "Derive avy faces from nano faces."
+  (with-eval-after-load 'avy
+    (set-face-attribute 'avy-lead-face nil
+			:background nano-color-faded)
+    (set-face-attribute 'avy-lead-face-0 nil
+			:background nano-color-subtle
+			:foreground (face-foreground 'default))
+    (set-face-attribute 'avy-lead-face-1 nil
+			:background nano-color-popout
+			:foreground (face-foreground 'default))
+    (set-face-attribute 'avy-lead-face-2 nil
+			:background nano-color-popout)))
+
 (defun nano-theme ()
   "Derive many, many faces from the core nano faces."
   (nano-theme--basics)
@@ -724,6 +738,7 @@ function is a convenience wrapper used by `describe-package-1'."
   (nano-theme--ivy)
   (nano-theme--helm)
   (nano-theme--hl-line)
-  (nano-theme--company))
+  (nano-theme--company)
+  (nano-theme--avy))
 
 (provide 'nano-theme)
